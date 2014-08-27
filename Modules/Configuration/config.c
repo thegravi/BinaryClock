@@ -55,7 +55,7 @@ int8_t CONFIG_setParam(uint8_t id, uint8_t value)
 		return -1;
 
 	cfg[id].value = value;
-	return EEPROM_writeByte(id, value);
+	return EEPROM_writeByte(id + _EEPROM_OFFSET_CONFIG, value);
 }
 
 int8_t CONFIG_getParam(uint8_t id, uint8_t* value)
