@@ -9,11 +9,13 @@
 #define CONFIG_H_
 
 #include <stdint.h>
-
 #include "../../Drivers/EEPROM/eeprom.h"
 
+#define _EEPROM_OFFSET_DEF_CONFIG 0x01
+#define _EEPROM_OFFSET_CONFIG     0x08
+
 enum {
-	CONFIG_PARAM_HOUR,
+	CONFIG_PARAM_HOUR = 0,
 	CONFIG_PARAM_MINUTE,
 	CONFIG_PARAM_SECOND,
 	CONFIG_PARAM_BRIGHTNESS,
@@ -25,6 +27,12 @@ enum {
 struct Config_t {
 	uint8_t value;
 };
+
+/**
+ * @brief Loads config from EEPROM
+ * @return operation status
+ */
+int8_t CONFIG_init(void);
 
 /**
  * @brief Sets configuration parameter
