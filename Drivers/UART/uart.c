@@ -44,21 +44,24 @@ static void UART_sendString(const char* buffer, uint8_t len)
 		UART_sendChar(*buffer++);
 }
 
-static void UART_sendNumber(uint32_t byte, uint8_t base)
+static void UART_sendNumber(int32_t num, uint8_t base)
 {
 	const char hexChars[16] = "0123456789ABCDEF";
 	char buff[20];
-	memset(buff, 0, sizeof(buff));
-	char *p;
 	uint8_t len = 0;
+	memset(buff, 0, sizeof(buff));
+	char *p = buff + sizeof(buff);
 
-	p = buff + sizeof(buff);
+	if (num < 0) {
+		UART_sendString("-", 1);
+		num = -num;
+	}
 
 	do
 	{
-		*--p = hexChars[byte%base];
-		byte /= base; len++;
-	} while(byte > 0);
+		*--p = hexChars[num%base];
+		num /= base; len++;
+	} while(num > 0);
 
 	UART_sendString(p, len);
 }
