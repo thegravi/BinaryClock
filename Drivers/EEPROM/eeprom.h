@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 #include <avr/eeprom.h>
+#include "../../Modules/Configuration/config.h"
 
 /**
  * @brief Writes 1 byte to EEPROM memory
