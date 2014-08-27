@@ -7,19 +7,25 @@
 
 #include "uart.h"
 
-void (*dataReceiveCallback)(char);
+static void (*dataReceiveCallback)(char);
 
-void UART_init(void (*callback)(char))
+void UART_init(void)
 {
-	if (callback != NULL)
-		dataReceiveCallback = callback;
-
 	// 38400 baud rate for a 8MHz Clock
-	UCSRB  |= 1<<TXEN | 1<<RXEN;
-	UCSRB |= 1<<RXCIE;
+	UCSRB  |= 1<<TXEN;
 	UCSRC  |= 1<<UCSZ1 | 1<<UCSZ0;
 	UBRRH   = 0;
 	UBRRL   = 12;
+	__asm__ __volatile__ ("sei");
+}
+
+void UART_registerReceiveCallback(void (*callback)(char))
+{
+	if (callback == NULL)
+		return;
+
+	dataReceiveCallback = callback;
+	UCSRB |= 1<<RXCIE | 1<<RXEN;
 }
 
 static void UART_sendChar(char c)
@@ -28,6 +34,7 @@ static void UART_sendChar(char c)
 
 	while (!(UCSRA & (1<<UDRE)) && timeout > 0)
 		timeout--;
+
 	UDR = c;
 }
 
@@ -132,6 +139,5 @@ void UART_log(char *format, ...)
 
 ISR (USART_RXC_vect)
 {
-	PORTC ^= 1<<PC5;
 	dataReceiveCallback(UDR);
 }

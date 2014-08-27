@@ -23,7 +23,9 @@
 #define _SPACE 0x20
 
 
-void UART_init(void (*dataReceiveCallback)(char data));
+void UART_init(void);
+
+void UART_registerReceiveCallback(void (*callback)(char));
 
 void UART_log(char *format, ...);
 
