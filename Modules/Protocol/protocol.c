@@ -64,7 +64,7 @@ int8_t PROTO_processCommand(uint8_t argc, char argv[][10])
 		if (memcmp((void*)argv[1], (void*)"timeformat", 10) == 0) {
 			uint8_t timeFormat;
 			CONFIG_getParam(CONFIG_PARAM_TIME_FORMAT, &timeFormat);
-			UART_log("Current time format: %s\n", (timeFormat) ? "12" : "24");
+			UART_log("Current time format: %s\n", (timeFormat == 12) ? "12" : "24");
 		}
 		else if (memcmp((void*)argv[1], (void*)"brightness", 10) == 0) {
 			uint8_t brightness;
@@ -82,6 +82,26 @@ int8_t PROTO_processCommand(uint8_t argc, char argv[][10])
 		}
 
 		return 0;
+	}
+
+	if (memcmp((void*)argv[0], (void*)"set", 3) == 0) {
+
+		if (memcmp((void*)argv[1], (void*)"timeformat", 10) == 0) {
+			uint8_t timeformat;
+			if (memcmp((void*)argv[2], (void*)"12", 2) == 0) {
+				timeformat = 12;
+			}
+			else if (memcmp((void*)argv[2], (void*)"24", 2) == 0) {
+				timeformat = 24;
+			}
+			else {
+				UART_log("-- Wrong time format: (12, 24)\n");
+				return -1;
+			}
+
+			CONFIG_setParam(CONFIG_PARAM_TIME_FORMAT, timeformat);
+		}
+
 	}
 
 	return -1;
