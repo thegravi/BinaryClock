@@ -12,6 +12,7 @@
 #include <stdint.h>
 
 #include "../../Drivers/UART/uart.h"
+#include "../Configuration/config.h"
 
 int8_t PROTO_parseData(char* buffer);
 

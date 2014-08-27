@@ -62,13 +62,23 @@ int8_t PROTO_processCommand(uint8_t argc, char argv[][10])
 	if (memcmp((void*)argv[0], (void*)"get", 3) == 0) {
 
 		if (memcmp((void*)argv[1], (void*)"timeformat", 10) == 0) {
-			UART_log("Current time format: 24 h\n");
+			uint8_t timeFormat;
+			CONFIG_getParam(CONFIG_PARAM_TIME_FORMAT, &timeFormat);
+			UART_log("Current time format: %s\n", (timeFormat) ? "12" : "24");
 		}
 		else if (memcmp((void*)argv[1], (void*)"brightness", 10) == 0) {
-			UART_log("LEDs brightness: 73%\n");
+			uint8_t brightness;
+			CONFIG_getParam(CONFIG_PARAM_BRIGHTNESS, &brightness);
+			UART_log("LEDs brightness: %d %\n", brightness);
 		}
 		else if (memcmp((void*)argv[1], (void*)"time", 4) == 0) {
-			UART_log("Current Time: 23:41\n");
+			uint8_t hour;
+			uint8_t minute;
+			uint8_t second;
+			CONFIG_getParam(CONFIG_PARAM_HOUR, &hour);
+			CONFIG_getParam(CONFIG_PARAM_MINUTE, &minute);
+			CONFIG_getParam(CONFIG_PARAM_SECOND, &second);
+			UART_log("Current Time: %d:%d:%d\n", hour, minute, second);
 		}
 
 		return 0;
