@@ -15,6 +15,9 @@ int8_t EEPROM_writeByte(uint8_t addr, uint8_t value)
 
 int8_t EEPROM_readByte(uint8_t addr, uint8_t *value)
 {
+	if (value == NULL)
+		return -1;
+
 	*value = eeprom_read_byte((uint8_t*) addr);
 	return 0;
 }
