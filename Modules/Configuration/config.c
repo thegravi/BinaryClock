@@ -34,7 +34,7 @@ int8_t CONFIG_init(void)
 		if (value == 0xFF)
 			goto _writeDefaultConfig;
 
-		cfg[id].value = value;
+		cfg[id - _EEPROM_OFFSET_CONFIG].value = value;
 	}
 
 	return 0;
