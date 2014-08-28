@@ -90,7 +90,11 @@ int8_t PROTO_processCommand(uint8_t argc, char argv[][10])
 
 	if (memcmp((void*)argv[0], (void*)"set", 3) == 0) {
 
-		if (memcmp((void*)argv[1], (void*)"timeformat", 10) == 0) {
+		if (memcmp((void*)argv[1], (void*)"time", 4) == 0) {
+
+		}
+		else if (memcmp((void*)argv[1], (void*)"timeformat", 10) == 0) {
+			
 			uint8_t timeformat;
 			if (memcmp((void*)argv[2], (void*)"12", 2) == 0) {
 				timeformat = 12;
@@ -104,6 +108,9 @@ int8_t PROTO_processCommand(uint8_t argc, char argv[][10])
 			}
 
 			CONFIG_setParam(CONFIG_PARAM_TIME_FORMAT, timeformat);
+		}
+		else if (memcmp((void*)argv[1], (void*)"brightness", 10) == 0) {
+			
 		}
 
 	}
