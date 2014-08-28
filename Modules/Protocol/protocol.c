@@ -2,7 +2,7 @@
  * protocol.c
  *
  *  Created on: 2014 rugp. 25
- *      Author: Graûvidas
+ *      Author: Gra≈ævidas
  */
 
 #include "protocol.h"
@@ -52,7 +52,11 @@ int8_t PROTO_processCommand(uint8_t argc, char argv[][10])
 	if (memcmp((void*)argv[0], (void*)"help", 4) == 0) {
 		UART_log("Binary clock command list:\n");
 		UART_log("-help\t\tLists all available commands\n");
-		UART_log("-get\t\tReturs one of the parameters\n");
+		UART_log("-get\t\tReturs one of the following parameters\n");
+		UART_log("\ttime\tcurrent time\n");
+		UART_log("\tbrightness\tLEDs intensity\n");
+		UART_log("\ttimeformat\ttime format (24/12)\n");
+		UART_log("-set\t\tSets one of the following parameters\n");
 		UART_log("\ttime\tcurrent time\n");
 		UART_log("\tbrightness\tLEDs intensity\n");
 		UART_log("\ttimeformat\ttime format (24/12)\n");
